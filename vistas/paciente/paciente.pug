@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title Búsqueda de Datos
+  body
+    h1 Búsqueda de Datos
+    form(action="/buscar" method="get")
+      label(for="nombre") Nombre:
+      input(type="text" name="nombre" id="nombre")
+      br
+      label(for="dni") DNI:
+      input(type="text" name="dni" id="dni")
+      br
+      button(type="submit") Buscar
+      br
+    - if (pacientes.length === 0)  // Verifica si pacientes está vacío y Muestra el botón "Agregar" si pacientes está vacío
+      button(type="submit") 
+        a(href="/agregar" style = "text-decoration: none; color: black") Agregar nuevo  
+    -else
+      table
+        thead
+          tr
+            th Nombre
+            th DNI
+        tbody
+          each paciente in pacientes
+            tr
+              td= paciente.nombreCompleto
+              td= paciente.dni
