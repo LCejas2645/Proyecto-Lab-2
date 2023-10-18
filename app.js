@@ -44,26 +44,23 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/buscar', async (req, res) => {
-  console.log("nombnreeeee"+req.query.nombre);
+  console.log("nombnreeeee" + req.query.nombre);
 
-  if(req.query.nombre!=undefined||req.query.dni!=undefined){
+  if (req.query.nombre != undefined || req.query.dni != undefined) {
     const pacientes = await paciente.findAll({
       where: {
         [Op.and]: [
-          { nombreCompleto: { [Op.like]: `%${req.query.nombre}%` } } , // Búsqueda por nombre (insensible a mayúsculas/minúsculas)
+          { nombreCompleto: { [Op.like]: `%${req.query.nombre}%` } }, // Búsqueda por nombre (insensible a mayúsculas/minúsculas)
           { dni: { [Op.like]: `%${req.query.dni}%` } }, // Búsqueda por DNI
         ],
       },
     });
-    console.log("nombnreeeee"+pacientes.nombreCompleto);
-    res.render('./paciente/paciente', { pacientes});
-  }else{
+    console.log("nombnreeeee" + pacientes.nombreCompleto);
+    res.render('./paciente/paciente', { pacientes });
+  } else {
     let pacientes = {}
-    res.render('./paciente/paciente', { pacientes});
+    res.render('./paciente/paciente', { pacientes });
   }
-
-
-
 });
 
 //cargar paciente
@@ -73,15 +70,60 @@ app.get("/paciente", (req, res) => {
 }
 )
 
-app.get("/agregar", (req, res) => {
+app.get("/agregar", async (req, res) => {
+  // const pacienteN = {
+  //   nombreCompleto,
+  //   dni,
+  // } = req.body;
+
+  // const pocientoOBJ = await paciente.create(pacienteN);
+  // console.log(pocientoOBJ.toJSON());
+  res.render("paciente/agregar", {});
+}
+)
+
+app.post("/agregar", async (req, res) => {
+  console.log(req.body);
+  let { nombreCompleto, dni } = req.body;
+  const pacienteN = {
+    nombreCompleto,
+    dni,
+  } = req.body;
+
+
+
+  const pocientoOBJ = await paciente.create(pacienteN);
+  console.log(pocientoOBJ.toJSON());
   res.render("paciente/agregar", {});
 }
 )
 
 
-app.listen(3000, () => {
-  console.log('Servidor Express en ejecución en el puerto 3000');
-});
+app.get("/actualizar/:id", async (req, res) => {
+  const pacienteId = await paciente.findByPk(req.params.id);
+  console.log(req.params.id);
+  console.log(pacienteId);
+  res.render("paciente/actualizar", { pacienteId });
+}
+)
 
-export default app;
+app.post("/actualizar/:id", async (req, res) => {
+  const pacienteId = await paciente.findByPk(req.params.id)
+
+  pacienteId.nombreCompleto = req.body.nombreCompleto;
+  pacienteId.edad = req.body.edad;
+
+  await pacienteId.save();
+  console.log("actualizaaaaoooooooooooo"+pacienteId.toJSON());
+  res.render("paciente/agregar", {});
+}
+)
+
+
+
+  app.listen(3000, () => {
+    console.log('Servidor Express en ejecución en el puerto 3000');
+  });
+
+  export default app;
 

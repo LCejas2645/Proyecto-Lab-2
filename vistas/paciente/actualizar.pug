@@ -1,15 +1,15 @@
 html 
     head 
     body 
-        form(action="/agregar", method="post")
+        form(action=`/actualizar/${pacienteId.id}`, method="post")
             label(for="nombreCompleto") Nombre Completo:
-            input(type="text", name="nombreCompleto", id="nombreCompleto")
+            input(type="text", name="nombreCompleto", id="nombreCompleto" value=`${pacienteId.nombreCompleto}`)
             br
             label(for="edad") Edad:
-            input(type="number", name="edad", id="edad")
+            input(type="number", name="edad", id="edad" value=`${pacienteId.edad}`)
             br
             label(for="mail") Correo Electrónico:
-            input(type="email", name="mail", id="mail")
+            input(type="email", name="mail", id="mail" value=`${pacienteId.mail}`)
             br
             label Sexo:
             select(name="sexo")
@@ -18,12 +18,12 @@ html
                  option(value="Otro") Otro
             br
             label Embarazo:
-            input(type="checkbox", name="embarazo", id="embarazo")
+            input(type="checkbox", name="embarazo", id="embarazo", value=`${pacienteId.embarazo}`)
             br
             label(for="patologiaPre") Patología Preexistente:
             input(type="text", name="patologiaPre", id="patologiaPre")
             br
             label(for="dni") DNI:
-            input(type="number", name="dni", id="dni")
+            input(type="number", name="dni", id="dni" value=`${pacienteId.dni}`)
             br
-            button(type="submit") Agregar Paciente
+            button(type="submit") Actualizar paciente
