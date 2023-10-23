@@ -5,6 +5,7 @@ import { urlencoded } from 'express';
 // import usersRouter from './routes/users.js';
 import paciente, { sequelize } from './models/paciente.js';
 import { Op } from "sequelize";
+import methodOverride from  "method-override";
 
 
 
@@ -16,6 +17,7 @@ app.set('view engine', 'pug');
 
 
 // app.use(logger('dev'));
+app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.set("views", "vistas");
@@ -39,8 +41,9 @@ app.set("view engine", "pug");
 //TEST
 
 app.get('/', async (req, res) => {
+  let error = true;
   const pacientes = await paciente.findAll();
-  res.render('./paciente/paciente', { pacientes });
+  res.render('./paciente/paciente', { pacientes,error:error });
 });
 
 app.get('/buscar', async (req, res) => {
@@ -83,18 +86,33 @@ app.get("/agregar", async (req, res) => {
 )
 
 app.post("/agregar", async (req, res) => {
-  console.log(req.body);
-  let { nombreCompleto, dni } = req.body;
-  const pacienteN = {
-    nombreCompleto,
-    dni,
-  } = req.body;
+  let error = true;
+  try{
+    if (req.body.embarazo==undefined){
+      req.body.embarazo=false
+    }else{
+      req.body.embarazo=true
+    }
+    const pacienteN = {
+      nombreCompleto : req.body.nombreCompleto,
+      dni: req.body.dni,
+      sexo: req.body.sexo,
+      mail: req.body.mail,
+      edad: req.body.edad,
+      patologiaPre : req.body.patologiaPre, 
+      embarazo:req.body.embarazo
+    };
 
 
 
-  const pocientoOBJ = await paciente.create(pacienteN);
-  console.log(pocientoOBJ.toJSON());
-  res.render("paciente/agregar", {});
+    const pocientoOBJ = await paciente.create(pacienteN);
+    console.log(pocientoOBJ.toJSON());
+    error = false
+    res.render("/", {error});
+  }catch{
+    error = true
+    res.render("/", {error});
+  }
 }
 )
 
@@ -107,15 +125,23 @@ app.get("/actualizar/:id", async (req, res) => {
 }
 )
 
-app.post("/actualizar/:id", async (req, res) => {
-  const pacienteId = await paciente.findByPk(req.params.id)
-
-  pacienteId.nombreCompleto = req.body.nombreCompleto;
-  pacienteId.edad = req.body.edad;
-
-  await pacienteId.save();
-  console.log("actualizaaaaoooooooooooo"+pacienteId.toJSON());
-  res.render("paciente/agregar", {});
+app.put("/actualizar", async (req, res) => {
+  if (req.body.embarazo==undefined){
+    req.body.embarazo=false
+  }else{
+    req.body.embarazo=true
+  }
+  const result = await paciente.update(
+    {nombreCompleto:req.body.nombreCompleto, 
+     dni:req.body.dni,
+     edad:req.body.edad,
+     sexo:req.body.sexo,
+     embarazo:req.body.embarazo,
+     patologiaPre:req.body.patologiaPre,
+     mail:req.body.mail},
+    {where:{id:req.body.id}})
+  res.redirect("/");
+  console.log("post = "+req.body.sexo)
 }
 )
 
