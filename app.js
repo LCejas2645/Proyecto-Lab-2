@@ -4,8 +4,11 @@ import { urlencoded } from 'express';
 // import indexRouter from './routes/index.js';
 // import usersRouter from './routes/users.js';
 import paciente, { sequelize } from './models/paciente.js';
+import determinacion from './models/determinacion.js';
+import examen from './models/examen.js';
+import muestra from './models/muestra.js';
 import { Op } from "sequelize";
-import methodOverride from  "method-override";
+import methodOverride from "method-override";
 
 
 
@@ -43,7 +46,7 @@ app.set("view engine", "pug");
 app.get('/', async (req, res) => {
   let error = true;
   const pacientes = await paciente.findAll();
-  res.render('./paciente/paciente', { pacientes,error:error });
+  res.render('./paciente/paciente', { pacientes, error: error });
 });
 
 app.get('/buscar', async (req, res) => {
@@ -74,33 +77,26 @@ app.get("/paciente", (req, res) => {
 )
 
 app.get("/agregar", async (req, res) => {
-  // const pacienteN = {
-  //   nombreCompleto,
-  //   dni,
-  // } = req.body;
-
-  // const pocientoOBJ = await paciente.create(pacienteN);
-  // console.log(pocientoOBJ.toJSON());
   res.render("paciente/agregar", {});
 }
 )
 
 app.post("/agregar", async (req, res) => {
   let error = true;
-  try{
-    if (req.body.embarazo==undefined){
-      req.body.embarazo=false
-    }else{
-      req.body.embarazo=true
+  try {
+    if (req.body.embarazo == undefined) {
+      req.body.embarazo = false
+    } else {
+      req.body.embarazo = true
     }
     const pacienteN = {
-      nombreCompleto : req.body.nombreCompleto,
+      nombreCompleto: req.body.nombreCompleto,
       dni: req.body.dni,
       sexo: req.body.sexo,
       mail: req.body.mail,
       edad: req.body.edad,
-      patologiaPre : req.body.patologiaPre, 
-      embarazo:req.body.embarazo
+      patologiaPre: req.body.patologiaPre,
+      embarazo: req.body.embarazo
     };
 
 
@@ -108,10 +104,10 @@ app.post("/agregar", async (req, res) => {
     const pocientoOBJ = await paciente.create(pacienteN);
     console.log(pocientoOBJ.toJSON());
     error = false
-    res.render("/", {error});
-  }catch{
+    res.render("/", { error });
+  } catch {
     error = true
-    res.render("/", {error});
+    res.render("/", { error });
   }
 }
 )
@@ -126,30 +122,74 @@ app.get("/actualizar/:id", async (req, res) => {
 )
 
 app.put("/actualizar", async (req, res) => {
-  if (req.body.embarazo==undefined){
-    req.body.embarazo=false
-  }else{
-    req.body.embarazo=true
+  if (req.body.embarazo == undefined) {
+    req.body.embarazo = false
+  } else {
+    req.body.embarazo = true
   }
   const result = await paciente.update(
-    {nombreCompleto:req.body.nombreCompleto, 
-     dni:req.body.dni,
-     edad:req.body.edad,
-     sexo:req.body.sexo,
-     embarazo:req.body.embarazo,
-     patologiaPre:req.body.patologiaPre,
-     mail:req.body.mail},
-    {where:{id:req.body.id}})
+    {
+      nombreCompleto: req.body.nombreCompleto,
+      dni: req.body.dni,
+      edad: req.body.edad,
+      sexo: req.body.sexo,
+      embarazo: req.body.embarazo,
+      patologiaPre: req.body.patologiaPre,
+      mail: req.body.mail
+    },
+    { where: { id: req.body.id } })
   res.redirect("/");
-  console.log("post = "+req.body.sexo)
+  console.log("post = " + req.body.sexo)
 }
 )
 
 
+app.get("/examen", async(req,res)=>{
+  res.render("examen/examen",{});
+})
 
-  app.listen(3000, () => {
-    console.log('Servidor Express en ejecución en el puerto 3000');
-  });
+app.get("/nuevoExamen", async(req,res)=>{
+  res.render("examen/nuevoExamen",{});
+})
 
-  export default app;
+app.post("/nuevoExamen", async(req,res)=>{
+  const examenN = {
+    descripcion: req.body.descripcion,
+    tiempoPromedio: req.body.tiempoPromedio
+  };
+  const examenobj = await examen.create(examenN);
+  res.render("examen/muestra",{examenobj});
+})
+
+app.post("/nuevaMuestra", async(req,res)=>{
+  let idexam = req.body.idExamen;
+  const muestraN = {
+    descripcion: req.body.descripcion,
+    idExamen: req.body.idExamen
+  };
+  const meustraobj = await muestra.create(muestraN);
+  res.render("examen/determinacion",{idexam});
+})
+
+app.post("/nuevaDeterminacion", async(req,res)=>{
+  let idexam = req.body.idExamen;
+  const determN = {
+    descripcion: req.body.descripcion,
+    examenId: req.body.idExamen,
+    unidadMedida:req.body.unidadMedida,
+    valorMin:req.body.valorMin,
+    valorMax:req.body.valorMax,
+    valorReferencia:req.body.valorReferencia
+  };
+  const meustraobj = await determinacion.create(determN);
+  res.render("examen/determinacion",{idexam});
+})
+
+
+
+app.listen(3000, () => {
+  console.log('Servidor Express en ejecución en el puerto 3000');
+});
+
+export default app;
 

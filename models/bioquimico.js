@@ -15,7 +15,7 @@ export default class Paciente extends Model {
     // define association here
   }
 }
-Paciente.init({
+Bioquimico.init({
   
   pass: DataTypes.INTEGER
 }, {

@@ -75,29 +75,3 @@ html
                         input.form-control(name="patologiaPre", id="patologiaPre" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
                 div.container(style="display:flex;justify-content: center;")
                     button(type="submit" class="btn btn-primary" ) Agregar Nuevo paciente 
-        //form(action="/agregar", method="post")
-            label(for="nombreCompleto") Nombre Completo:
-            input(type="text", name="nombreCompleto", id="nombreCompleto")
-            br
-            label(for="edad") Edad:
-            input(type="number", name="edad", id="edad")
-            br
-            label(for="mail") Correo Electrónico:
-            input(type="email", name="mail", id="mail")
-            br
-            label Sexo:
-            select(name="sexo")
-                 option(value="Masculino") Masculino
-                 option(value="Femenino") Femenino
-                 option(value="Otro") Otro
-            br
-            label Embarazo:
-            input(type="checkbox", name="embarazo", id="embarazo")
-            br
-            label(for="patologiaPre") Patología Preexistente:
-            input(type="text", name="patologiaPre", id="patologiaPre")
-            br
-            label(for="dni") DNI:
-            input(type="number", name="dni", id="dni")
-            br
-            button(type="submit") Agregar Paciente

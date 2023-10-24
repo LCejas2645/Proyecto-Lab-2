@@ -10,19 +10,21 @@ export const sequelize = new Sequelize('proyectolab2', 'root', '', {
 
 
 
-export default class Paciente extends Model {
+export default class Determinacion extends Model {
   static associate(models) {
     // define association here
   }
 }
-Paciente.init({
+Determinacion.init({
+  examenId:DataTypes.INTEGER,
   descripcion:DataTypes.STRING,
-  valorMuestra:DataTypes.DOUBLE,
-  medicion:DataTypes.STRING,
-  valorReferencia:DataTypes.INTEGER
+  unidadMedida:DataTypes.STRING,
+  valorMin:DataTypes.DOUBLE,
+  valorMax:DataTypes.DOUBLE,
+  valorReferencia:DataTypes.DOUBLE
 }, {
   sequelize,
-  modelName: 'Administrativo',
-  tableName: 'administrativo',
+  modelName: 'Determinacion',
+  tableName: 'determinacion',
   timestamps: false
 });

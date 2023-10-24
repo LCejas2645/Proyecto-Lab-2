@@ -10,18 +10,17 @@ export const sequelize = new Sequelize('proyectolab2', 'root', '', {
 
 
 
-export default class Examen extends Model {
+export default class Muestra extends Model {
   static associate(models) {
     // define association here
   }
 }
-Examen.init({
+Muestra.init({
   descripcion:DataTypes.STRING,
-  tiempoPromedio:DataTypes.INTEGER,
-  activo:DataTypes.BOOLEAN,
+  idExamen:DataTypes.INTEGER,
 }, {
   sequelize,
-  modelName: 'Examen',
-  tableName: 'examen',
+  modelName: 'Muestra',
+  tableName: 'muestra',
   timestamps: false
 });

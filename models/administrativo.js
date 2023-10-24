@@ -15,7 +15,7 @@ export default class Paciente extends Model {
     // define association here
   }
 }
-Paciente.init({
+Administrativo.init({
   
   pass: DataTypes.INTEGER
 }, {
