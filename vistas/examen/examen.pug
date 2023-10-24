@@ -34,23 +34,13 @@ body
                         a.nav-link.active(aria-current="page", href="/") Pacientes
                     li.nav-item
                         a.nav-link(href="#") Ordenes
-                    //li.nav-item
-                        a.nav-link.disabled(aria-disabled="true") Disabled
-                    //li.nav-item.dropdown
-                        a.nav-link.dropdown-toggle(href="#", data-bs-toggle="dropdown", aria-expanded="false") Dropdown
     div.container
         h1(style="text-align: center;") Gestión de Exámenes Médicos
 
     //Formulario para ingresar nuevos exámenes 
     h2 Ingreso de Nuevos Exámenes
     form(action="/nuevoexamen")
-        label(for="nombreExamen") Nombre del Examen:
-        input(type="text" id="nombreExamen" name="nombreExamen")
-        // Opciones para agregar determinaciones, valores de referencia y muestras 
-
         button(type="submit") Agregar Nuevo Examen
-
-
     // Lista de exámenes existentes 
     div.class.alert.alert-primary.alert-dismissible.fade.show(style="padding: 30px; background-color: royalblue;")
       table.table.table-striped
@@ -59,78 +49,16 @@ body
               th(scope="col") Examen
               th(scope="col") Editar Examen
         tbody
-                 
-            tr
-                input(type="hidden" name="id" value)
-                td
-                    a(href="") examen 1
-                td
-                    form(action=`/actualizar/`)  
-                    button(type="submit" class="btn btn-primary")
-                        svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16")
-                        path(d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z")
-                        path(fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z")
-
-
-        //<!-- Más exámenes...
-
-
-    //<!-- Formulario para agregar nuevas determinaciones
-    h2 Agregar Nuevas Determinaciones
-    form
-        label(for="nombreDeterminacion") Nombre de la Determinación:
-        input(type="text" id="nombreDeterminacion" name="nombreDeterminacion")
-        button(type="submit") Agregar Determinación
-
-<!-- Lista de determinaciones existentes -->
-    h2 Determinaciones Existentes
-    ul
-        li Determinación 1
-            button Activar/Desactivar
- 
-        li Determinación 2
-            button Activar/Desactivar
-
-<!-- Más determinaciones... -->
-
-
-<!-- Formulario para agregar nuevos valores de referencia -->
-    h2 Agregar Nuevos Valores de Referencia
-    form
-        label(for="valorReferencia") Valor de Referencia:
-        input(type="text" id="valorReferencia" name="valorReferencia")
-        button(type="submit") Agregar Valor de Referencia
-    form
-
-<!-- Lista de valores de referencia existentes -->
-    h2 Valores de Referencia Existentes
-    ul 
-        li Valor de Referencia 1
-            button Activar/Desactivar
-
-        li Valor de Referencia 2
-            button Activar/Desactivar
-
-<!-- Más valores de referencia... -->
-
-
-<!-- Formulario para agregar nuevas muestras -->
-    h2 Agregar Nuevas Muestras
-    Form
-        label(for="nombreMuestra") Nombre de la Muestra:
-        input(type="text" id="nombreMuestra" name="nombreMuestra")
-        button(type="submit") Agregar Muestra
-
-
-<!-- Lista de muestras existentes -->
-    h2Muestras Existentes
-    ul
-        li Muestra 1
-            button Activar/Desactivar
-
-        li Muestra 2
-            button Activar/Desactivar
-
-<!-- Más muestras... -->
+            each examen in examenes       
+                tr
+                    input(type="hidden" name="id" value)
+                    td
+                        a(href="")= examen.descripcion
+                    td
+                        form(action=`/actualizar/`)  
+                        button(type="submit" class="btn btn-primary")
+                            svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16")
+                            path(d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z")
+                            path(fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z")
 
 

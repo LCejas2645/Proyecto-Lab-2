@@ -35,31 +35,22 @@ body
                     li.nav-item
                         a.nav-link(href="#") Ordenes
     div.container 
-        h1 muestra agregada con exito, ingrese su determinacion
+        h1 ingrese un valor de referencia para esa determinacion
     div.container
-        form(action="/nuevaDeterminacion", method="post")
+        form(action="/nuevoValor", method="post")
             div.miform
-                input(name="idExamen" type="hidden" value=`${idexam}`)
+                input(name="determinacionId" type="hidden" value=`${detaobj.id}`)
                 div.input-group.mb-3(style = "width:  300px;")
                     div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default Descripcion
-                    input.form-control(name="descripcion" id="descripcion" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
+                        span.input-group-text#inputGroup-sizing-default categoria
+                    input.form-control(name="categoria" id="categoria" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
                 div.input-group.mb-3(style = "width:  300px;")
                     div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default unidadMedida
-                    input.form-control(name="unidadMedida" id="unidadMedida" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default valorMin
+                        span.input-group-text#inputGroup-sizing-default valor min
                     input.form-control(name="valorMin" id="valorMin" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
                 div.input-group.mb-3(style = "width:  300px;")
                     div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default valorMax
+                        span.input-group-text#inputGroup-sizing-default valor max
                     input.form-control(name="valorMax" id="valorMax" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default valorReferencia
-                    input.form-control(name="valorReferencia" id="valorReferencia" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-
             div.container    
                 button(type="submit" class="btn btn-primary" ) Agregar Determinacion

@@ -7,6 +7,8 @@ import paciente, { sequelize } from './models/paciente.js';
 import determinacion from './models/determinacion.js';
 import examen from './models/examen.js';
 import muestra from './models/muestra.js';
+import valoresReferencia from './models/valorReferencia.js';
+
 import { Op } from "sequelize";
 import methodOverride from "method-override";
 
@@ -144,47 +146,59 @@ app.put("/actualizar", async (req, res) => {
 )
 
 
-app.get("/examen", async(req,res)=>{
-  res.render("examen/examen",{});
+app.get("/examen", async (req, res) => {
+  const examenes = await examen.findAll();
+  res.render("examen/examen", {examenes});
 })
 
-app.get("/nuevoExamen", async(req,res)=>{
-  res.render("examen/nuevoExamen",{});
+app.get("/nuevoExamen", (req, res) => {
+  res.render("examen/nuevoExamen", {});
 })
 
-app.post("/nuevoExamen", async(req,res)=>{
+app.post("/nuevoExamen", async (req, res) => {
   const examenN = {
     descripcion: req.body.descripcion,
     tiempoPromedio: req.body.tiempoPromedio
   };
   const examenobj = await examen.create(examenN);
-  res.render("examen/muestra",{examenobj});
+  res.render("examen/muestra", { examenobj });
 })
 
-app.post("/nuevaMuestra", async(req,res)=>{
+app.post("/nuevaMuestra", async (req, res) => {
   let idexam = req.body.idExamen;
   const muestraN = {
     descripcion: req.body.descripcion,
     idExamen: req.body.idExamen
   };
   const meustraobj = await muestra.create(muestraN);
-  res.render("examen/determinacion",{idexam});
+  res.render("examen/determinacion", { idexam });
 })
 
-app.post("/nuevaDeterminacion", async(req,res)=>{
+app.post("/nuevaDeterminacion", async (req, res) => {
   let idexam = req.body.idExamen;
   const determN = {
     descripcion: req.body.descripcion,
     examenId: req.body.idExamen,
-    unidadMedida:req.body.unidadMedida,
-    valorMin:req.body.valorMin,
-    valorMax:req.body.valorMax,
-    valorReferencia:req.body.valorReferencia
+    unidadMedida: req.body.unidadMedida,
+    valorMin: req.body.valorMin,
+    valorMax: req.body.valorMax,
+    valorReferencia: req.body.valorReferencia
   };
-  const meustraobj = await determinacion.create(determN);
-  res.render("examen/determinacion",{idexam});
+  const detaobj = await determinacion.create(determN);
+  res.render("examen/valoresReferencia", { detaobj })
 })
 
+app.post("/nuevoValor",async (req,res)=>{
+  const valorN = {
+    determinacionId: req.body.determinacionId,
+    categoria: req.body.categoria,
+    valorMin: req.body.valorMin,
+    valorMax: req.body.valorMax,
+  };
+
+  const valobj = await valoresReferencia.create(valorN);
+  res.json(valobj);
+})
 
 
 app.listen(3000, () => {
