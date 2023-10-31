@@ -1,16 +1,10 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+'use strict';
+const {
+  Model
+} = require('sequelize');
 
-
-// Crear una instancia de Sequelize
-export const sequelize = new Sequelize('proyectolab2', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-  logging: false,
-});
-
-
-
-export default class Paciente extends Model {
+module.exports = (sequelize, DataTypes) => {
+  class Administrativo extends Model {
   static associate(models) {
     // define association here
   }
@@ -24,3 +18,5 @@ Administrativo.init({
   tableName: 'administrativo',
   timestamps: false
 });
+return Administrativo;
+}

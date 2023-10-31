@@ -1,28 +1,22 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
-
-
-// Crear una instancia de Sequelize
-export const sequelize = new Sequelize('proyectolab2', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-  logging: false,
-});
-
-
-
-export default class ValorReferencia extends Model {
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {class valorReferencia extends Model {
   static associate(models) {
     // define association here
   }
 }
-ValorReferencia.init({
+valorReferencia.init({
   determinacionId:DataTypes.INTEGER,
   categoria:DataTypes.STRING,
   valorMin:DataTypes.DOUBLE,
   valorMax:DataTypes.DOUBLE,
 }, {
   sequelize,
-  modelName: 'ValoresReferencia',
+  modelName: 'valorReferencia',
   tableName: 'valoresReferencia',
   timestamps: false
 });
+return valorReferencia;
+}

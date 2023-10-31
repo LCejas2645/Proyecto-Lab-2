@@ -1,21 +1,13 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
-
-
-// Crear una instancia de Sequelize
-export const sequelize = new Sequelize('proyectolab2', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-  logging: false,
-});
-
-
-
-export default class Paciente extends Model {
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => { class orden extends Model {
   static associate(models) {
     // define association here
   }
 }
-Paciente.init({
+orden.init({
   id_Paciente:DataTypes.INTEGER,
   id_Administrativo:DataTypes.INTEGER,
   id_Examen:DataTypes.INTEGER,
@@ -25,7 +17,9 @@ Paciente.init({
   estado:DataTypes.ENUM('esperando toma de muestra','Analitica','Para Validar','Informada')
 }, {
   sequelize,
-  modelName: 'Administrativo',
+  modelName: 'orden',
   tableName: 'administrativo',
   timestamps: false
-});
+})
+return orden
+}

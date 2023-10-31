@@ -1,4 +1,3 @@
-
 html
 head
     title Agregar Nuevo Examen
@@ -6,9 +5,6 @@ head
     link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3")
     link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous")
     style. 
-        //.container.form{
-            background-color: green;  
-        //}
         .miform{
             display: flex;
             flex-direction: row;
@@ -22,6 +18,20 @@ head
         .form-control{
             width:100px 
         }
+        .dos{
+            text-decoration: none;
+            color: #212529
+        }
+        a.dos:hover {
+            color: ivory  
+        }
+        a:focus {
+            background: yellow;
+        }
+
+        .dos:active {
+            background-color: red
+        }        
 body
     nav.navbar.navbar-expand-sm.navbar-dark.bg-dark(aria-label="Third navbar example")
         div.container-fluid
@@ -34,32 +44,48 @@ body
                         a.nav-link.active(aria-current="page", href="/") Pacientes
                     li.nav-item
                         a.nav-link(href="#") Ordenes
-    div.container 
-        h1 muestra agregada con exito, ingrese su determinacion
-    div.container
-        form(action="/nuevaDeterminacion", method="post")
-            div.miform
-                input(name="idExamen" type="hidden" value=`${idexam}`)
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default Descripcion
-                    input.form-control(name="descripcion" id="descripcion" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default unidadMedida
-                    input.form-control(name="unidadMedida" id="unidadMedida" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default valorMin
-                    input.form-control(name="valorMin" id="valorMin" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default valorMax
-                    input.form-control(name="valorMax" id="valorMax" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default valorReferencia
-                    input.form-control(name="valorReferencia" id="valorReferencia" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
+    div.container(style="display:flex; max-width:100%;background-color: lightslategray")
+        div.container(style="width:50%")
+            a.dos(href="/examen" style="") 
+                h3(style="text-align: center;") Gestión de Exámenes Médicos
+        div.container(style="width:50%")
+            a.dos(href="/nuevoExamen") 
+                h3(style="text-align: center;") Ingreso de nuevo Examen                       
+    div(class="alert alert-success" role="alert" style="padding:2px")
+        h4(style="text-align:center") Ingrese determinacion/es para el examen nuevo!!!
+    div.alert.alert-primary(style="display:flex;justify-content:center") 
+        form(id="examenForm", action="/nuevaDeterminacion", method="post")
+            input(type="hidden" name="idExamen" value=`${idExamen}`)
+            div.container(style="display:flex;justify-content:space-around;width:700px") 
+                div.container(style="display:flex;justify-content:space-around;width:700px") 
+                    h5 ingrese determinacion 
+                    input(type="text" name="descripcion" class="form-control")
+                div.container(style="display:flex;justify-content:space-around;width:700px")     
+                    h5 agregar valor de referencia
+                    button(type="button", id="agregarValor" class="btn btn-primary") +
+            div.container#valoresContainer(style="display:flex;justify-content:space-around")
+            div.container(style="display:flex;justify-content:space-around;width:700px")
+                button(type="submit" class="btn btn-success") cargar Determinacion
+            //button(type="submit") Finalizar
 
-            div.container    
-                button(type="submit" class="btn btn-primary" ) Agregar Determinacion
+            script.
+                const examenForm = document.getElementById("examenForm");
+                const determinacionesContainer = document.getElementById("determinacionesContainer");
+                const agregarValor = document.getElementById("agregarValor");
+                let muestraCount=0;
+                agregarValor.addEventListener("click", function () {
+                    muestraCount++
+                    const containerVal = document.createElement("div"); 
+                    const valor = document.createElement("div"); 
+
+                    const valorDiv = document.createElement("div");
+                    valorDiv.id = "valor";
+                    valorDiv.innerHTML = '<label for="categoria">Categoria :</label>' +
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="categoria">'+
+                    '<label for="valorMin">Valor Min :</label>' +
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="valorMin">'+
+                    '<label for="valorMax">Valor Max :</label>' +
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="valorMax">';
+                    valoresContainer.appendChild(containerVal);
+                    containerVal.appendChild(valorDiv);
+                });

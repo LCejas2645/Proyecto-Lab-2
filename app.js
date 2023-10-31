@@ -1,17 +1,28 @@
-import express from 'express';
-import { urlencoded } from 'express';
-// import { join } from 'path';
-// import indexRouter from './routes/index.js';
-// import usersRouter from './routes/users.js';
-import paciente, { sequelize } from './models/paciente.js';
-import determinacion from './models/determinacion.js';
-import examen from './models/examen.js';
-import muestra from './models/muestra.js';
-import valoresReferencia from './models/valorReferencia.js';
 
-import { Op } from "sequelize";
-import methodOverride from "method-override";
+// import express from 'express';
+// import { urlencoded } from 'express';
+// import paciente, { sequelize } from './models/paciente.js';
+// import determinacion from './models/determinacion.js';
+// import examen from './models/examen.js';
+// import muestra from './models/muestra.js';
+// import valoresReferencia from './models/valorReferencia.js';
+// import { Op, json } from "sequelize";
+// import methodOverride from "method-override";
+// import { Sequelize } from 'sequelize';
 
+const express = require('express');
+const urlencoded = require('express').urlencoded;
+const paciente = require('./models').paciente;
+const sequelize = require('./models/paciente.js').sequelize;
+const determinacion = require('./models/determinacion.js');
+const examen = require('./models').examen;
+const muestra = require('./models').muestra;
+const valoresReferencia = require('./models/valorReferencia.js');
+const Sequelize = require('sequelize');
+
+const Op = Sequelize.Op;
+const json = require('sequelize').json;
+const methodOverride = require('method-override');
 
 
 var app = express();
@@ -148,7 +159,70 @@ app.put("/actualizar", async (req, res) => {
 
 app.get("/examen", async (req, res) => {
   const examenes = await examen.findAll();
-  res.render("examen/examen", {examenes});
+  res.render("examen/examen", { examenes });
+})  
+
+app.get("/editar/:id",async(req,res)=>{
+  const examenes = await examen.findAll();
+  const examenEdit = await examen.findByPk(req.params.id);
+
+  res.render("examen/editarExamen", {examenEdit,examenes});
+})
+
+app.put("/editarExamen", async(req,res)=>{
+ 
+  const result = await examen.update(
+    {
+      descripcion : req.body.descripcion,
+      activo : req.body.activo
+    },
+    { where: { id: req.body.id } })
+  res.redirect("/examen")
+})
+
+//buscar todas las muestras de un examen
+app.get("/editarMuestras/:id", async (req, res) => {
+  try {
+    const examenes = await examen.findAll()
+    const examenEdit = await examen.findByPk(req.params.id);
+
+
+    if (!examenEdit) {
+      return res.status(404).json({ message: "Examen no encontrado" });
+    }
+
+    //res.json(examenEdit)
+    res.render("examen/editarMuestra",{
+      examenEdit,
+      examenes,
+      muestras: await examenEdit.getMuestras()
+    });
+  } catch (error) {
+    console.error("Error al obtener las muestras:", error);
+    res.status(500).json({ message: "Error al obtener las muestras" });
+  }
+});
+
+//editar muestras de un examen
+app.put("/muestraNueva", async(req,res)=>{
+  console.log("posteado")
+  let idExamen = req.body.idExamen;
+  let muestraN  = {
+    idMuestra : req.body.idMuestra,
+    descripcionMuestra: req.body.descripcionMuestra
+  } 
+
+ let muestraNueva = await muestra.update(
+  {
+    descripcion:req.body.descripcionMuestra,
+    activo : req.body.activo
+  },
+  {
+    where:{id:req.body.idMuestra}
+  }
+ )
+
+  res.json(muestraNueva)
 })
 
 app.get("/nuevoExamen", (req, res) => {
@@ -164,46 +238,52 @@ app.post("/nuevoExamen", async (req, res) => {
   res.render("examen/muestra", { examenobj });
 })
 
-app.post("/nuevaMuestra", async (req, res) => {
-  let idexam = req.body.idExamen;
-  const muestraN = {
-    descripcion: req.body.descripcion,
-    idExamen: req.body.idExamen
-  };
-  const meustraobj = await muestra.create(muestraN);
-  res.render("examen/determinacion", { idexam });
+app.post("/muestra", async (req, res) => {
+  let muestras = req.body.descripcion;
+  let idExamen = req.body.idExamen;
+
+  muestras.forEach(async (descripcion) => {
+    await muestra.create({ descripcion: descripcion, idExamen: idExamen });
+  });
+
+  //const meustraobj = await muestra.create(muestraN);
+  res.render("examen/determinacion", { idExamen });
 })
 
 app.post("/nuevaDeterminacion", async (req, res) => {
-  let idexam = req.body.idExamen;
-  const determN = {
+  let idExamen = req.body.idExamen;
+
+  let examenId = req.body.idExamen;
+  let determinacionN = await determinacion.create({
     descripcion: req.body.descripcion,
-    examenId: req.body.idExamen,
-    unidadMedida: req.body.unidadMedida,
-    valorMin: req.body.valorMin,
-    valorMax: req.body.valorMax,
-    valorReferencia: req.body.valorReferencia
-  };
-  const detaobj = await determinacion.create(determN);
-  res.render("examen/valoresReferencia", { detaobj })
+    examenId: examenId
+  })
+
+
+  let determinacionId = determinacionN.id;
+  let categoria = req.body.categoria;
+  let valorMin = req.body.valorMin;
+  let valorMax = req.body.valorMax;
+
+  console.log(determinacionId);
+  // res.json(determinacionN.id)
+  categoria.forEach(async (categoria) => {
+    await valoresReferencia.create({
+      categoria: categoria,
+      valorMin: valorMin,
+      valorMax: valorMax,
+      determinacionId: determinacionId
+    });
+  });
+
+  res.render("examen/determinacion", { idExamen })
 })
 
-app.post("/nuevoValor",async (req,res)=>{
-  const valorN = {
-    determinacionId: req.body.determinacionId,
-    categoria: req.body.categoria,
-    valorMin: req.body.valorMin,
-    valorMax: req.body.valorMax,
-  };
-
-  const valobj = await valoresReferencia.create(valorN);
-  res.json(valobj);
-})
 
 
 app.listen(3000, () => {
   console.log('Servidor Express en ejecución en el puerto 3000');
 });
 
-export default app;
+module.exports = app;
 

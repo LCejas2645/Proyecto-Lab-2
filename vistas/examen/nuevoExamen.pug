@@ -9,6 +9,9 @@ head
         //.container.form{
             background-color: green;  
         //}
+        body{
+            background-color:ivory;
+        }
         .miform{
             display: flex;
             flex-direction: row;
@@ -22,6 +25,20 @@ head
         .form-control{
             width:100px 
         }
+        .dos{
+            text-decoration: none;
+            color: #212529
+        }
+        a.dos:hover {
+            color: firebrick  
+        }
+        a:focus {
+            background: yellow;
+        }
+
+        .dos:active {
+            background-color: red
+        }        
 body
     nav.navbar.navbar-expand-sm.navbar-dark.bg-dark(aria-label="Third navbar example")
         div.container-fluid
@@ -34,9 +51,17 @@ body
                         a.nav-link.active(aria-current="page", href="/") Pacientes
                     li.nav-item
                         a.nav-link(href="#") Ordenes
+    div.container(style="display:flex; max-width:100%;background-color:ivory;padding:0px")
+        div.container(style="width:50%;background-color:darkgray")
+            a.dos(href="/examen" style="") 
+                h3(style="text-align: center;") Gestión de Exámenes Médicos
+        div.container(style="width:50%")
+            a.dos(href="/nuevoExamen") 
+                h3(style="text-align: center;background-color:ivory") Ingreso de nuevo Examen
+    div.container(style="display:flex; max-width:100%;background-color:ivory;padding:0px")
 
-    div.container
-        form(action="/nuevoExamen", method="post")
+    div.container(style="background-color:ivory")
+        form(action="/nuevoExamen?_method=PUT", method="post")
             div.miform
                 div.input-group.mb-3(style = "width:  300px;")
                     div.input-group-prepend
