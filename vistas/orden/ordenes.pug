@@ -18,9 +18,7 @@ html
               a.nav-link.active(aria-current="page", href="#") Pacientes
             li.nav-item
               a.nav-link(href="#") Ordenes
-    //- -if(!error)
-    //-   h1 paciente agregado 
-    form(action="/buscar" method="get") 
+    form(action="/buscarOrdenes" method="get") 
       div.container(style = "padding:  20px; max-width: 412px")
         div.input-group.mb-3(style = "width:  300px;")
           div.input-group-prepend
@@ -31,48 +29,36 @@ html
             span.input-group-text#inputGroup-sizing-default DNI
           input.form-control(type="text" name="dni" id="dni", aria-label="Default", aria-describedby="inputGroup-sizing-default")    
         button(type="submit" class="btn btn-primary") Buscar 
-        - if (pacientes.length === 0)  // Verifica si pacientes está vacío y Muestra el botón "Agregar" si pacientes está vacío
-          button(type="submit" class="btn btn-primary" style="position: relative; left: 97px;") 
-            a(href="/agregar" style = "text-decoration: none; color: white;") Agregar nuevo 
+        //- if (ordenes.length === 0)  // Verifica si pacientes está vacío y Muestra el botón "Agregar" si pacientes está vacío
+        button(type="submit" class="btn btn-primary" style="position: relative; left: 97px;") 
+            a(href="/agregarOrden" style = "text-decoration: none; color: white;") Agregar nuevo 
     div.class.alert.alert-primary.alert-dismissible.fade.show(style="padding: 30px; background-color: royalblue;")
       table.table.table-striped
         thead
             tr
-              th(scope="col") Nombre y Aperllido
-              th(scope="col") Dni
-              th(scope="col") Edad
-              th(scope="col") Correo
-              th(scope="col") Sexo
-              th(scope="col") Embarazo
-              th(scope="col") Editar
+              th(scope="col") id 
+              th(scope="col") id Paciente
+              th(scope="col") id Tecnico 
+              th(scope="col") id Bioquimico
+              th(scope="col") id EXAMEN
+              th(scope="col") id Administrativo
+              th(scope="col") diagnostico 
+              th(scope="col") estado
+              th(scope="col") editar
         tbody
-          each paciente in pacientes  
+          each orden in ordenes  
               tr
-                input(type="hidden" name="id" value=`${paciente.id}`)
-                td#env(onClick="enviarFormulario()")
-                  form(action=`/crearOrden/${paciente.id}`, method="get" id="crearOrden") 
-                    a(href=``)= paciente.nombreCompleto
-                td= paciente.dni
-                td= paciente.edad 
-                td= paciente.mail
-                td= paciente.sexo
+                td= orden.id
+                td= orden.id_Paciente
+                td= orden.id_Tecnico
+                td= orden.id_Bioquimico
+                td= orden.id_Examen
+                td= orden.id_Administrativo
+                td= orden.diagnostico
+                td= orden.estado
                 td
-                  input(type="checkbox" id="miCheckbox" value="valor-ejemplo" style="width: 70;height: 22;"  checked=paciente.embarazo disabled)
-                td
-                  form(action=`/actualizar/${paciente.id}`)  
+                  form(action=``)  
                     button(type="submit" class="btn btn-primary")
                       svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16")
                         path(d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z")
                         path(fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z")
-  script.
-    function enviarFormulario() {
-      // Simulamos un clic en el botón de envío real
-      document.getElementById('crearOrden').submit();
-    }   
-
-
-
-
-
-
-        

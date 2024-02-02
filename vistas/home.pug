@@ -1,4 +1,3 @@
-
 html
 head
     title Agregar Nuevo Examen
@@ -10,7 +9,7 @@ head
             background-color: green;  
         //}
         body{
-            background-color:ivory;
+            background-color:#495057;
         }
         .miform{
             display: flex;
@@ -48,31 +47,8 @@ body
             div.collapse.navbar-collapse#navbarsExample03
                 ul.navbar-nav.me-auto.mb-2.mb-sm-0
                     li.nav-item
-                        a.nav-link.active(aria-current="page", href="/") Pacientes
+                        a.nav-link.active(aria-current="page", href="/paciente") Pacientes
                     li.nav-item
                         a.nav-link(href="#") Ordenes
-    div.container(style="display:flex; max-width:100%;background-color:ivory;padding:0px")
-        div.container(style="width:50%;background-color:darkgray")
-            a.dos(href="/examen" style="") 
-                h3(style="text-align: center;") Gestión de Exámenes Médicos
-        div.container(style="width:50%")
-            a.dos(href="/nuevoExamen") 
-                h3(style="text-align: center;background-color:ivory") Ingreso de nuevo Examen
-    div.container(style="display:flex; max-width:100%;background-color:ivory;padding:0px")
-
-    div.container(style="background-color:ivory")
-        form(action="/nuevoExamen", method="post")
-            div.miform
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default Descripcion
-                    input.form-control(name="descripcion" id="descripcion" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-                div.input-group.mb-3(style = "width:  300px;")
-                    div.input-group-prepend
-                        span.input-group-text#inputGroup-sizing-default Tiempo promedio en dias
-                    input.form-control(name="tiempoPromedio" id="descripcion" type="text", aria-label="Default", aria-describedby="inputGroup-sizing-default")
-
-            div.container 
-                
-            div.container    
-                button(type="submit" class="btn btn-primary" ) Agregar Nuevo examen
+                    li.nav-item
+                        a.nav-link(href="/examen") Examenes

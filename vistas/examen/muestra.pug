@@ -52,27 +52,40 @@ body
             a.dos(href="/nuevoExamen") 
                 h3(style="text-align: center;") Ingreso de nuevo Examen                       
     div(class="alert alert-success" role="alert" style="padding:2px")
-        h4(style="text-align:center") Ingrese muestra/s para el examen nuevo!
+        h4(style="text-align:center") Ingrese muestra para el examen nuevo!
     div.container
-        form(id="examenForm", action="/muestra", method="post")
+        form(id="examenForm", action=`/muestra`, method="post")
             div.container
                 div.container(style="display:flex;justify-content: center")
-                    span.input-group-text agregar muestra  
-                    button(type="button" class="btn btn-primary", id="agregarMuestra" style="width:40px; heigth: 3px") +
+                    span.input-group-text Seleccione muestra
+
+                    input(type="text", name="descripcion" id="muestraSelec" list="opciones" autocomplete="off")
+                    datalist(id="opciones")
+                        each muestra in muestras
+                         option(value=`${muestra.descripcion}`) 
                 input(type="hidden" name="idExamen" value=`${examenobj.id}`)
                 div.alert.alert-primary#muestrasContainer(style="display:flex;justify-content:space-around")
                 div.container(style="display:flex;justify-content: center")
                     button(type="submit" class="btn btn-success") cargar muestra/s
-                script.
-                    const examenForm = document.getElementById("examenForm");
-                    const muestrasContainer = document.getElementById("muestrasContainer");
-                    const agregarMuestraButton = document.getElementById("agregarMuestra");
-                    let muestraCount = 0;
-                    agregarMuestraButton.addEventListener("click", function () {
-                        muestraCount++;
-                        const muestraDiv = document.createElement("div");
-                        muestraDiv.innerHTML = '<label for="muestra_' + muestraCount + '">Muestra ' + muestraCount + ':</label>' +
-                        '<input class="form-control" style="width:210px" type="text" id="muestra_' + muestraCount + '" name="descripcion">';
-                        muestrasContainer.appendChild(muestraDiv);
-                    });
+        form(action="/nuevaMuestra", method="get")
+            div.container 
+                button(type="submit" class="btn btn-primary", id="agregarMuestra" style="") O registre una nueva muestra! 
+                //- script.
+                //-     const examenForm = document.getElementById("examenForm");
+                //-     const muestrasContainer = document.getElementById("muestrasContainer");
+                //-     const agregarMuestraButton = document.getElementById("agregarMuestra");
+                //-     const inputMuestra = document.getElementById("muestraSelec")
+                //-     let muestraCount = 0;
+                //-     agregarMuestraButton.addEventListener("click", function () {
+
+                //-         //- agregarMuestraButton.disabled = true;
+                //-         //- inputMuestra.name = "inputN";
+                //-         //- inputMuestra.disabled = true;
+                //-         //- muestraCount++;
+                //-         //- const muestraDiv = document.createElement("div");
+                //-         //- muestraDiv.innerHTML = '<label for="muestra_' + muestraCount + '">Muestra Nueva:</label>' +
+                //-         //- '<input class="form-control" style="width:210px" type="text" id="muestra_' + muestraCount + '" name="descripcion">';
+                //-         //- muestrasContainer.appendChild(muestraDiv);
+                //-     });
+
 

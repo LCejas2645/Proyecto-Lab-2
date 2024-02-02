@@ -5,9 +5,10 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class examen extends Model {
     static associate(models) {
-      examen.hasMany(models.muestra, {
-        as:"Muestras",
-        foreignKey: 'idExamen', // Nombre de la clave foránea en la tabla Muestra
+      examen.belongsTo(models.muestra, {
+        // as:"Muestras"
+          //  targetKey:'id' ,
+           foreignKey: 'idMuestra', // Nombre de la clave foránea en la tabla Muestra
       });
     }
   }
@@ -16,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     descripcion:DataTypes.STRING,
     tiempoPromedio:DataTypes.INTEGER,
     activo:DataTypes.BOOLEAN,
+    idMuestra:DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'examen',

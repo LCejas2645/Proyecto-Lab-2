@@ -5,7 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class paciente extends Model {
     static associate(models) {
-      // define association here
+      //paciente.belongsTo(models.orden, {
+        //foreignKey: "id_Paciente"
+      //})
     }
   }
   paciente.init({

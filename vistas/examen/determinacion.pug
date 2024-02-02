@@ -63,9 +63,9 @@ body
                 div.container(style="display:flex;justify-content:space-around;width:700px")     
                     h5 agregar valor de referencia
                     button(type="button", id="agregarValor" class="btn btn-primary") +
-            div.container#valoresContainer(style="display:flex;justify-content:space-around")
-            div.container(style="display:flex;justify-content:space-around;width:700px")
-                button(type="submit" class="btn btn-success") cargar Determinacion
+            div.container#valoresContainer(style="")
+            div.container(style="width:700px")
+                button(type="submit" class="btn btn-success" id="cargar") cargar Determinacion
             //button(type="submit") Finalizar
 
             script.
@@ -80,12 +80,41 @@ body
 
                     const valorDiv = document.createElement("div");
                     valorDiv.id = "valor";
-                    valorDiv.innerHTML = '<label for="categoria">Categoria :</label>' +
+                    valorDiv.style = "display:Flex;align-items: center"
+                    valorDiv.innerHTML = 
+
+                    '<label for="categoria">Categoria :</label>' +
                     '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="categoria">'+
                     '<label for="valorMin">Valor Min :</label>' +
                     '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="valorMin">'+
                     '<label for="valorMax">Valor Max :</label>' +
-                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="valorMax">';
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="valorMax">'+
+                    '<label for="min">Minimo posible :</label>' +
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="min">'+
+                    '<label for="max">Maximo posible :</label>' +
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="max">'+
+                    '<label for="unidadMedida">Unidad Medida :</label>' +
+                    '<select name="unidadMedida" id="unidadMedida">' +
+                        '<option value="mg/dL">mg/dL</option>' +
+                        '<option value="g/dL">g/dL</option>' +
+                        '<option value="µg/dL">µg/dL</option>' +
+                        '<option value="mmHg">mmHg</option>' +
+                        '<option value="%">%</option>' +
+                        '<option value="ng/mL">ng/mL</option>' +
+                        '<option value="UI/mL">UI/mL</option>' +
+                    '</select>' +
+                    '<label for="edadMin">Edad Min :</label>' +
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="edadMin">'+
+                    '<label for="edadMax">Edad Max :</label>' +
+                    '<input class="form-control" style="display:flex;justify-content:space-around" type="text" id="muestra_' + muestraCount + '" name="edadMax">';
                     valoresContainer.appendChild(containerVal);
                     containerVal.appendChild(valorDiv);
                 });
+                let cargarb = document.getElementById("cargar")
+                
+                cargarb.addEventListener("click", function () {
+                    
+                })
+
+   
+

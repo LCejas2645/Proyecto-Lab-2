@@ -5,17 +5,16 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class muestra extends Model {
     static associate(models) {
-      muestra.belongsTo(models.examen,{
+      muestra.hasMany(models.examen,{
         
-        foreignKey: 'idExamen',
-        //target_Key: 'idExamen'
+        // // foreignKey: 'idExamen',
+        foreignKey: 'idMuestra'
       })
     }
   }
   muestra.init({
     activo:DataTypes.BOOLEAN,
     descripcion:DataTypes.STRING,
-    idExamen:DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'muestra',

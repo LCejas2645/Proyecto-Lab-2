@@ -100,10 +100,19 @@ body
                     div.container
                         label(for="descripcion") Examen
                         input(type="text" class="form-control" name="descripcion" value=`${examenEdit.descripcion}`) 
+                        label(for="tiempoPromedio") Tiempo Promedio en dias
+                        input(type="number" class="form-control" name="tiempoPromedio" value=`${examenEdit.tiempoPromedio}`) 
+
                     div.container 
                         input(type="hidden", value=`${examenEdit.id}`  name="id")
-                        label(for="activoT") Activo
-                        input(type="radio" id="activoT" class="" name="activo" value="true" checked aria-label="Radio button for following text input") 
-                        label(for="activo") Inactivo
-                        input(type="radio" class="" name="activo" value="false" aria-label="Radio button for following text input")
+                        -if(examenEdit.activo)
+                            label(for="activoT") Activo
+                            input(type="radio" id="activoT" class="" name="activo" value="true" checked aria-label="Radio button for following text input") 
+                            label(for="activo") Inactivo
+                            input(type="radio" class="" name="activo" value="false" aria-label="Radio button for following text input")
+                        -else 
+                            label(for="activoT") Activo
+                            input(type="radio" id="activoT" class="" name="activo" value="true"  aria-label="Radio button for following text input") 
+                            label(for="activo") Inactivo
+                            input(type="radio" class="" name="activo" value="false" checked aria-label="Radio button for following text input")                            
                         button(type="submit" class="btn btn-primary") Actualizar                         

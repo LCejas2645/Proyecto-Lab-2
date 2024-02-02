@@ -4,7 +4,9 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => { class orden extends Model {
   static associate(models) {
-    // define association here
+    //orden.hasOne(models.paciente,{
+      //foreignKey:"id_Paciente"
+    //})
   }
 }
 orden.init({
@@ -14,11 +16,11 @@ orden.init({
   id_Bioquimico:DataTypes.INTEGER,
   id_Tecnico:DataTypes.INTEGER,
   diagnostico:DataTypes.STRING,
-  estado:DataTypes.ENUM('esperando toma de muestra','Analitica','Para Validar','Informada')
+  estado:DataTypes.ENUM('esperando toma de muestra','Analitica','Para Validar','Informada','Datos incompletos!')
 }, {
   sequelize,
   modelName: 'orden',
-  tableName: 'administrativo',
+  tableName: 'orden',
   timestamps: false
 })
 return orden

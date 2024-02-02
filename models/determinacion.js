@@ -8,12 +8,8 @@ module.exports = (sequelize, DataTypes) => {class determinacion extends Model {
   }
 }
 determinacion.init({
-  examenId:DataTypes.INTEGER,
   descripcion:DataTypes.STRING,
-  unidadMedida:DataTypes.STRING,
-  valorMin:DataTypes.DOUBLE,
-  valorMax:DataTypes.DOUBLE,
-  valorReferencia:DataTypes.DOUBLE
+  activo:DataTypes.BOOLEAN
 }, {
   sequelize,
   modelName: 'determinacion',

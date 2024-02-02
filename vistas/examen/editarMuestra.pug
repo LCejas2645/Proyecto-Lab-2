@@ -101,8 +101,7 @@ body
                         label(for="descripcion") Examen
                         input(type="text" class="form-control" name="descripcion" value=`${examenEdit.descripcion}`) 
                     div.container 
-                        h6 muestras
-                            each muestrasN in muestras
+                        h6 muestra
                                 form(action="/muestraNueva?_method=PUT", method="post") 
                                     input(type="text" class="form-control" name="descripcionMuestra" value=`${muestrasN.descripcion}`)
                                     input(type="hidden", value=`${muestrasN.id}`  name="idMuestra")
